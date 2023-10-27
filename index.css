@@ -1,11 +1,60 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-#title{
-    width: 100%;
-    height: 5%;
+.header{
     display: flex;
-    justify-content: flex-start;
-    column-gap: 25%;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+.logo{
+    
+    width: 10em;
+    height: 10em;
+}
+.nav-items{
+    padding: 2em 2em;
+    font-size: 1.5rem;
+}
+.nav-items > ul{
+    display: flex;
+    column-gap: 2em;
+    list-style: none;
+}
+.res-card{    
+    
+    width: 17rem; 
+       
+    margin: .5em;
+    background-color: rgb(244, 242, 242);
+    
+    padding-bottom: .5em;
+}
+.res-card:hover{
+    border: 1px solid black;
+    cursor: pointer;
+}
+.res-card > .item-img{
+    width: 100%;
+    height: 60%;
+}
+.filter-btn{
+    margin: .7em;
+    cursor: pointer;
+}
+.card-container{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1.5em;
+}
+.shimmer-cards{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1.5em;
+ 
+ 
+}
+.shimmer-card{
+    width: 17rem; 
+    height: 25rem;
+    margin: .5em;
+    background-color: rgb(244, 242, 242);
+    
+    padding-bottom: .5em;
 }
