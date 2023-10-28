@@ -39,7 +39,7 @@ export default function Body() {
                                                                                                                 Filter hotels</button></label>
             </div>
             <div className="card-container">
-              {filteredData.map((data)=>(<Link to={`/restaurants/${data.info.i}`}><Card key = {data.info.id}Data = {...data}/></Link>))}        
+              {filteredData.map((data)=>(<Link key = {data.info.id} to={`/restaurants/${data.info.id}`}><Card Data = {...data}/></Link>))}        
               
             </div>
           </div>
