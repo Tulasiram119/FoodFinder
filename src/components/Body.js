@@ -2,6 +2,7 @@
 import React, { useState,useEffect } from 'react'
 import Card from "./Card";
 import Shimmer from './Shimmer';
+import { Link } from 'react-router-dom';
 
 export default function Body() { 
   
@@ -38,7 +39,7 @@ export default function Body() {
                                                                                                                 Filter hotels</button></label>
             </div>
             <div className="card-container">
-              {filteredData.map((data)=>(<Card key = {data.info.id}Data = {...data}/>))}        
+              {filteredData.map((data)=>(<Link to={`/restaurants/${data.info.i}`}><Card key = {data.info.id}Data = {...data}/></Link>))}        
               
             </div>
           </div>

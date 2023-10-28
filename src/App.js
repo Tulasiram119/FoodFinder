@@ -6,6 +6,7 @@ import {  createBrowserRouter,RouterProvider,Outlet } from "react-router-dom";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
+import RestarauntCard from "./components/RestarauntCard";
 //JSX is HTML like syntax not html in js
 //const jsxHeading = <h1 id="heading">Heading using jsx</h1>;
 // babel transifiled jsx into react element
@@ -34,6 +35,9 @@ const appRouter = createBrowserRouter([{
     path:"/contact",
     element: <Contact/>,
      
+  },{
+    path:"/resta/:id",
+    element:<RestarauntCard />
   }],
   errorElement:<Error/> 
 },])
