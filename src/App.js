@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy , Suspense} from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -7,6 +7,8 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestarauntCard from "./components/RestarauntCard";
+
+//import Grocery from "./components/Grocery";
 //JSX is HTML like syntax not html in js
 //const jsxHeading = <h1 id="heading">Heading using jsx</h1>;
 // babel transifiled jsx into react element
@@ -21,6 +23,7 @@ const AppLayout = () => {
     </div>
   );
 };
+const Grocery = lazy(()=> import("./components/Grocery"));
 const appRouter = createBrowserRouter([{
   path:"/",
   element:<AppLayout/>,
@@ -36,9 +39,18 @@ const appRouter = createBrowserRouter([{
     element: <Contact/>,
      
   },{
+    path:"/grocery",
+    element: <Suspense fallback={<h1>It is fallback</h1>}><Grocery/></Suspense>,
+     
+  },
+  {
     path:"restaurants/:id",
     element:<RestarauntCard />
   }],
   errorElement:<Error/> 
 },])
-root.render(<RouterProvider router={appRouter}/>);
+
+
+  root.render(<RouterProvider router={appRouter}/>);
+
+

@@ -3,6 +3,7 @@ import React, { useState,useEffect } from 'react'
 import Card from "./Card";
 import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
+import useOnlineStatus from '../utilis/useOnlineStatus';
 
 export default function Body() { 
   
@@ -25,8 +26,10 @@ export default function Body() {
   
 },[])
  
-  
-  console.log("rendering");
+  const onlineStatus = useOnlineStatus();
+  if(onlineStatus === false){
+    return(<h1>Check</h1>)
+  }
         return datas?.length === 0? <Shimmer /> : (
           <div className="body">
             <div className="filter">

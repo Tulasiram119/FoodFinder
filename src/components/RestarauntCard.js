@@ -1,20 +1,13 @@
-import { useEffect,useState } from "react";
+
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
-import { MENU_API } from "../utilis/constants";
+
+import useRestraunt from "../utilis/useRestraunt";
 const RestarauntCard = ()=>{
-    const [resInfo,setResInfo] = useState(null);
+    // const [resInfo,setResInfo] = useState(null);
     const {id:resId} = useParams();
-    console.log(resId);
-    const fetchData = async()=>{
-        const data = await fetch(MENU_API+`${resId}`);
-        const json = await data.json();
-        setResInfo(json.data);
-        console.log(json.data);
-    }
-    useEffect(()=>{
-        fetchData();
-    },[])
+    const resInfo = useRestraunt(resId); 
+    
     if(resInfo === null){
         return <Shimmer/>
     }
