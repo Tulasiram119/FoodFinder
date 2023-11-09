@@ -1,15 +1,18 @@
 
-import React, { useState,useEffect } from 'react'
-import Card from "./Card";
+import React, { useState,useEffect, useContext } from 'react'
+import Card ,{promotedCard} from "./Card";
 import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utilis/useOnlineStatus';
+import UserContext from '../utilis/UserContext';
 
 export default function Body() { 
   
   const[datas,setDatas] = useState([]);
   const[text,setText] = useState("");
-  const[filteredData,setFilteredData] = useState([])   
+  const[filteredData,setFilteredData] = useState([]);
+  const PromotedCard = promotedCard(Card); 
+  const{loggedUser,setUser} = useContext(UserContext); 
  const fetchData = async ()=>{
   try {
     const data = await fetch("https://www.swiggy.com/mapi/homepage/getCards?lat=17.433546&lng=78.41905729999999");
@@ -32,17 +35,27 @@ export default function Body() {
   }
         return datas?.length === 0? <Shimmer /> : (
           <div className="body">
-            <div className="filter">
-              <button className='filter-btn' onClick={()=>{setFilteredData(datas.filter((data)=>data.info.avgRating >4.1))}}>Top Rated Restarent</button>
-            </div>
-            <div className="search">
-              <label htmlFor="search"><input type="text" name="search" id="search" value={text} onChange={(e)=>{setText(e.target.value);}}/><button type="button" onClick={()=>{const filtredRes = datas.filter((data)=>(data.info.name.toLowerCase().includes(text.toLowerCase())));
+            <div className="flex ">
+            <div className="search m-4 px-4">
+              <input type="text" className="border border-solid border-black mr-4"value={text} onChange={(e)=>{setText(e.target.value);}}/><button type="button" className=' bg-gray-400 rounded-lg px-2' onClick={()=>{const filtredRes = datas.filter((data)=>(data.info.name.toLowerCase().includes(text.toLowerCase())));
                                                                                                                 setFilteredData(filtredRes);
                                                                                                                 }}>
-                                                                                                                Filter hotels</button></label>
+                                                                                                                Filter hotels</button>
             </div>
-            <div className="card-container">
-              {filteredData.map((data)=>(<Link key = {data.info.id} to={`/restaurants/${data.info.id}`}><Card Data = {...data}/></Link>))}        
+            <div className=" m-4 px-4 flex items-center">
+              <button className= " bg-green-200 px-4 rounded-lg" onClick={()=>{setFilteredData(datas.filter((data)=>data.info.avgRating >4.1))}}>Top Rated Restarent</button>
+              </div>
+            <div className=" m-4 px-4 flex items-center">
+              <input className='border border-black' value={loggedUser} onChange={(e)=>setUser(e.target.value)}/>
+              </div>
+            
+            
+            </div>
+            <div className="card-container flex flex-wrap">
+              {/* this is where have to write logic for promoted tag */}
+              
+              {filteredData.map((data)=>(<Link key = {data.info.id} to={`/restaurants/${data.info.id}`}>
+                {data.info.promoted?<PromotedCard Data = {...data}/>:<Card Data = {...data}/>} </Link>))}        
               
             </div>
           </div>

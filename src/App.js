@@ -1,4 +1,4 @@
-import React, { lazy , Suspense} from "react";
+import React, { lazy , Suspense, useEffect, useState} from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -7,7 +7,10 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestarauntCard from "./components/RestarauntCard";
-
+import UserContext from "./utilis/UserContext";
+import { Provider } from "react-redux";
+import appStrore from "./utilis/appStore";
+import Cart from "./components/Cart";
 //import Grocery from "./components/Grocery";
 //JSX is HTML like syntax not html in js
 //const jsxHeading = <h1 id="heading">Heading using jsx</h1>;
@@ -16,11 +19,21 @@ import RestarauntCard from "./components/RestarauntCard";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const AppLayout = () => {
+  const [user,setUser] = useState();
+  useEffect(()=>{
+    const data = {name:"tulasiram"}
+    setUser(data.name);
+  },[])
+
   return (
+    <Provider store={appStrore}>
+    <UserContext.Provider value={{loggedUser:user,setUser}}>
     <div className="app">
       <Header />
       <Outlet />
     </div>
+    </UserContext.Provider>
+    </Provider>
   );
 };
 const Grocery = lazy(()=> import("./components/Grocery"));
@@ -46,7 +59,11 @@ const appRouter = createBrowserRouter([{
   {
     path:"restaurants/:id",
     element:<RestarauntCard />
-  }],
+  },
+{
+  path: "/cart",
+  element: <Cart />
+}],
   errorElement:<Error/> 
 },])
 
