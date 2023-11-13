@@ -6,34 +6,38 @@ import { Link } from 'react-router-dom';
 import useOnlineStatus from '../utilis/useOnlineStatus';
 import UserContext from '../utilis/UserContext';
 
-export default function Body() { 
+const Body = () =>{ 
   
   const[datas,setDatas] = useState([]);
   const[text,setText] = useState("");
   const[filteredData,setFilteredData] = useState([]);
   const PromotedCard = promotedCard(Card); 
-  const{loggedUser,setUser} = useContext(UserContext); 
+  const{loggedUser,setUser} = useContext(UserContext);
+  useEffect(()=>{
+    fetchData();
+    
+  },[]) 
  const fetchData = async ()=>{
+  
   try {
     const data = await fetch("https://www.swiggy.com/mapi/homepage/getCards?lat=17.433546&lng=78.41905729999999");
-  const parsedData = await data.json();  
-  setDatas(parsedData.data.success.cards[1].gridWidget.gridElements.infoWithStyle.restaurants);
-  setFilteredData(parsedData.data.success.cards[1].gridWidget.gridElements.infoWithStyle.restaurants)
+    const parsedData = await data.json();  
+    setDatas(parsedData.data.success.cards[1].gridWidget.gridElements.infoWithStyle.restaurants);
+    setFilteredData(parsedData.data.success.cards[1].gridWidget.gridElements.infoWithStyle.restaurants)
   } catch (error) {
     console.log(error);
   }
+    
+  
   
  }
- useEffect(()=>{
-  fetchData();
-  
-},[])
+ 
  
   const onlineStatus = useOnlineStatus();
   if(onlineStatus === false){
     return(<h1>Check</h1>)
   }
-        return datas?.length === 0? <Shimmer /> : (
+        return datas?.length === 0? (<Shimmer />) : (
           <div className="body">
             <div className="flex ">
             <div className="search m-4 px-4">
@@ -55,10 +59,11 @@ export default function Body() {
               {/* this is where have to write logic for promoted tag */}
               
               {filteredData.map((data)=>(<Link key = {data.info.id} to={`/restaurants/${data.info.id}`}>
-                {data.info.promoted?<PromotedCard Data = {...data}/>:<Card Data = {...data}/>} </Link>))}        
+                {data.info.promoted?<PromotedCard Data = {{...data}}/>:<Card Data = {{...data}}/>} </Link>))}        
               
             </div>
           </div>
         );
       };
 
+export default Body;

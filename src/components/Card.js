@@ -31,7 +31,7 @@ export const promotedCard = (Card)=>{
     return(
       <div>
       <label className="absolute bg-black text-white my-2 mx-4 rounded-lg p-2">Promoted</label>
-      <Card Data = {...(props.Data)} />
+      <Card Data = {{...(props.Data)}} />
       </div>
     )
   }

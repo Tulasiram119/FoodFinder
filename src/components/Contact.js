@@ -1,22 +1,14 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-export default function Contact() {
-  const [count,setCount] = useState(0);
-  useEffect(()=>{
-    const time = setInterval(()=>{
-      setCount(count+1)
-      console.log(count+1);
-    },2000)
-    console.log("UseEffect");
-    return () => {
-      console.log("useEffect as unmount");
-      clearInterval(time);
-    };
-  })
-  console.log("render");
+export default function Contact() {  
   return (
     <div>
-      <h1>If you any complaints please don't contact me {count}</h1>
+      <h1 className='font-bold p-4 m-4 text-3xl'>Contact us page</h1>
+      <form>
+        <input type="text" className='border border-black p-2 m-2' placeholder='name'/>
+        <input type="text" className='border border-black p-2 m-2' placeholder='message' />
+        <button className='m-2 p-2 border border-black bg-black rounded-lg text-white'>Submit</button>
+      </form>
     </div>
   )
 }
